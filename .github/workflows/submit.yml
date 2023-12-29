@@ -10,7 +10,7 @@ jobs:
       - name: Set up project folder
         run: |
           cd apps/browser-extension
-      - uses: pnpm/action-setup@v2.2.1
+      - uses: pnpm/action-setup@v2
         with:
           version: 7.1.0
           run_install: true

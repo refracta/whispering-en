@@ -12,7 +12,7 @@ jobs:
           cd apps/browser-extension
       - uses: pnpm/action-setup@v2
         with:
-          version: latest
+          version: 8.0
           run_install: true
       - name: Build and zip extension artifact
         run: pnpm build -- --zip

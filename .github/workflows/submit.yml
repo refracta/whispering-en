@@ -7,17 +7,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up project folder
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Install pnpm
+        run: npm install -g pnpm
+      - name: Install dependencies and build extension
         run: |
           cd apps/browser-extension
-      - uses: pnpm/action-setup@v2
+          pnpm i
+          pnpm plasmo build --zip
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
         with:
-          version: 8.0
-          run_install: true
-      - name: Build and zip extension artifact
-        run: pnpm build -- --zip
-      - name: Browser Platform Publish
-        uses: PlasmoHQ/bpp@v2
-        with:
-          keys: ${{ secrets.SUBMIT_KEYS }}
-          artifact: build/chrome-mv3-prod.zip
+          name: chrome-extension-artifact
+          path: apps/browser-extension/build/chrome-mv3-prod.zip
